@@ -16,6 +16,14 @@ def wb_parser(data_json):
     for row in data_json['id']:
         data_json = json.loads(get_new_json(row))
         try:
+            name = data_json['data']['products'][0]['name']
+        except KeyError:
+            name = ''
+        try:
+            brand = data_json['data']['products'][0]['brand']
+        except KeyError:
+            brand = ''
+        try:
             sale = data_json['data']['products'][0]['sale']
         except KeyError:
             sale = ''
@@ -64,14 +72,11 @@ def wb_parser(data_json):
 
         output_json = {
             row: {
+                'name': name,
+                'brand': brand,
                 'price': price,
                 'sale': sale,
-                'basicSale': basic_sale,
                 'basicPrice': basic_price,
-                'promoSale': promo_sale,
-                'promoPrice': promo_price,
-                'CustomerSale': customer_sale,
-                'CustomerPrice': customer_price,
             }
         }
         data.append(output_json)
